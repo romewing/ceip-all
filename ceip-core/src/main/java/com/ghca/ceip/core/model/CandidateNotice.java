@@ -2,16 +2,21 @@
 package com.ghca.ceip.core.model;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by gh on 2017/3/16.
  */
 @Entity
+@EntityListeners({AuditingEntityListener.class})
 public class CandidateNotice {
 
     @Id
@@ -19,26 +24,28 @@ public class CandidateNotice {
     @GenericGenerator(strategy = "uuid2", name = "id")
     private String id;
 
-    private String number;
+    @NotNull
+    private String project;  //项目名称
 
-    private String project;
+    private String region;  //所属地区
 
-    private String region;
+    @NotNull
+    @Column(unique = true)
+    private String url;     //公示链接
 
-    private String url;
+    private Date date;      //发布时间
 
-    private Date date;
+    @CreatedDate
+    private Date insertTime;    //采集时间
 
-    private String content;
+    private String source;  //采集网站
+
+    //private String owner;  //项目业主
 
 
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
+    /*@OneToMany
+    @JoinColumn(name = "candidate_notice_id")
+    private Set<Candidate> candidates = new HashSet<>(); //中标候选人*/
 
     public String getProject() {
         return project;
@@ -72,14 +79,6 @@ public class CandidateNotice {
         this.date = date;
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
     public String getId() {
         return id;
     }
@@ -87,4 +86,36 @@ public class CandidateNotice {
     public void setId(String id) {
         this.id = id;
     }
+
+    public Date getInsertTime() {
+        return insertTime;
+    }
+
+    public void setInsertTime(Date insertTime) {
+        this.insertTime = insertTime;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    /*public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public Set<Candidate> getCandidates() {
+        return candidates;
+    }
+
+    public void setCandidates(Set<Candidate> candidates) {
+        this.candidates = candidates;
+    }*/
 }

@@ -1,6 +1,6 @@
 spring:
   application:
-    name: spider
+    name: job
   cloud:
     config:
       enabled: true

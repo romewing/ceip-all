@@ -13,7 +13,14 @@ import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.web.client.RestTemplate;
+import us.codecraft.webmagic.Request;
 import us.codecraft.webmagic.Spider;
+import us.codecraft.webmagic.scheduler.QueueScheduler;
 import us.codecraft.webmagic.scheduler.RedisScheduler;
 import us.codecraft.webmagic.scheduler.Scheduler;
 
@@ -23,13 +30,50 @@ import us.codecraft.webmagic.scheduler.Scheduler;
 @EnableCircuitBreaker //2
 @EnableZuulProxy
 public class CEIPSpiderApplication {
+
     public static void main(String[] args) {
         ConfigurableApplicationContext run =
                 SpringApplication.run(CEIPSpiderApplication.class);
-        SpiderFactory bean = run.getBean(SpiderFactory.class);
-        bean.getSpider("").start();
     }
 
+
+   /* @Bean
+    public JedisConnectionFactory jedisConnectionFactory() {
+        JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
+        jedisConnectionFactory.setUsePool(true);
+        return jedisConnectionFactory;
+    }*/
+
+
+    /*@Bean
+    public RedisTemplate redisTemplate() {
+        RedisTemplate redisTemplate = new RedisTemplate();
+        redisTemplate.setConnectionFactory(jedisConnectionFactory());
+        return redisTemplate;
+    }
+
+    @Bean
+    public StringRedisTemplate stringRedisTemplate() {
+        StringRedisTemplate stringRedisTemplate = new StringRedisTemplate();
+        stringRedisTemplate.setConnectionFactory(jedisConnectionFactory());
+        return  stringRedisTemplate;
+    }*/
+
+    @Bean
+    public Scheduler scheduler() {
+       return new RedisScheduler("127.0.0.1"){
+            @Override
+            protected boolean shouldReserved(Request request) {
+                /*if("http://www.sccin.com.cn/InvestmentInfo/ZhaoBiao/houxuanren.aspx".equals(request.getUrl())) {
+                    return true;
+                }
+                return super.shouldReserved(request);*/
+                return true;
+            }
+        };
+
+       //return new QueueScheduler();
+    }
 
 }
 

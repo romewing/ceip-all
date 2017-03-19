@@ -14,7 +14,7 @@ public class CoreHystrixService {
 
     @Autowired
     private CoreService coreService;
-
+    @HystrixCommand(fallbackMethod = "fallbackSave")
     public void saveCandidateNotice(JSONArray candidateNotices) {
         coreService.saveCandidateNotice(candidateNotices);
     }
@@ -24,7 +24,7 @@ public class CoreHystrixService {
         coreService.test(candidateNotices);
     }
 
-    public void fallbackSave(String candidateNotices) {
+    public void fallbackSave(JSONArray candidateNotices) {
         System.out.println("fallbackSave");
     }
 
