@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: web
+  cloud:
+    config:
+      enabled: true
+      discovery:
+        enabled: true
+        service-id: config
+  thymeleaf:
+    cache: false
+    mode: HTML
+eureka:
+  instance:
+    non-secure-port: ${server.port:8082}
+  client:
+    service-url:
+      defaultZone: http://${eureka.host:localhost}:${eureka.port:19000}/eureka/

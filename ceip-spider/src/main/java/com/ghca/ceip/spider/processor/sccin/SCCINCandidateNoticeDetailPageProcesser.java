@@ -33,7 +33,7 @@ public class SCCINCandidateNoticeDetailPageProcesser implements SubPageProcessor
     public MatchOther processPage(Page page) {
 
         Html html = page.getHtml();
-        Selectable xpath = html.xpath("//div[@class='kuang'//table]/tidyText()");
+        Selectable xpath = html.xpath("//div[@class='kuang']//tidyText()");
         System.out.println(xpath.toString());
         /*
         JSONObject candidateNotice = new JSONObject();
