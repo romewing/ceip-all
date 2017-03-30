@@ -9,6 +9,7 @@
         <module>ceip-web</module>
         <module>ceip-job</module>
         <module>ceip-base</module>
+        <module>ceip-security</module>
     </modules>
 
     <parent>
