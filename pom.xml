@@ -10,6 +10,7 @@
         <module>ceip-job</module>
         <module>ceip-base</module>
         <module>ceip-security</module>
+        <module>ceip-storm</module>
     </modules>
 
     <parent>
