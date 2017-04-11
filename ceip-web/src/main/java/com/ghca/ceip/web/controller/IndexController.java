@@ -19,5 +19,10 @@ public class IndexController {
     public String form(){
         return "form";
     }
+
+    @RequestMapping("/role")
+    public String role() {
+        return "views/system/role";
+    }
 }
 

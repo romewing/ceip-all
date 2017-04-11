@@ -1,37 +1,59 @@
-
 package com.ghca.ceip.security.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Date;
 
 /**
- * Created by gh on 2017/4/10.
+ * Created by Administrator on 2017/4/11.
  */
 @Entity
-public class User implements UserDetails{
+public class User implements UserDetails {
 
+    @Id
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid")
     private String id;
+
     private String username;
     private String password;
-    private Set<Role> roles = new HashSet<>();
+
+
+    @CreatedDate
+    private Date createTime;  //用户创建时间
+
+    @LastModifiedDate
+    private Date updateTime;  //密码修改时间
+
+    @CreatedBy
+    private User createUser;  //创建该用户的用户
+
+    private boolean locked;
+
+    private boolean enable;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles;
+        return null;
     }
 
     @Override
     public String getPassword() {
-        return password;
+        return null;
     }
 
     @Override
     public String getUsername() {
-        return username;
+        return null;
     }
 
     @Override
