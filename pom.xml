@@ -11,6 +11,7 @@
         <module>ceip-base</module>
         <module>ceip-security</module>
         <module>ceip-storm</module>
+        <module>ceip-data</module>
     </modules>
 
     <parent>
