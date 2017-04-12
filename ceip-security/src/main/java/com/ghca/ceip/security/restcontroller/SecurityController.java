@@ -7,6 +7,7 @@ import com.ghca.ceip.security.repository.PermissionReository;
 import com.ghca.ceip.security.repository.RoleRepository;
 import com.ghca.ceip.security.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -33,7 +34,12 @@ public class SecurityController {
 
     @PostMapping("/user")
     public void createUser(@RequestBody User user) {
-        userRepository.createUser(user);
+        userRepository.save(user);
+    }
+
+    @GetMapping("/user/{username}")
+    public User getUser(@PathVariable String username) {
+        return (User) userRepository.findByUsername(username);
     }
 
     @PostMapping("/role")

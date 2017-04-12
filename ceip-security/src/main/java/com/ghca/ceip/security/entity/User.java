@@ -1,5 +1,6 @@
 package com.ghca.ceip.security.entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -154,5 +155,11 @@ public class User implements UserDetails {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    @Override
+    @JsonCreator
+    public String toString() {
+        return super.toString();
     }
 }

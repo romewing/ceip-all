@@ -22,12 +22,6 @@
             -->
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.apache.storm/storm-starter -->
-        <dependency>
-            <groupId>org.apache.storm</groupId>
-            <artifactId>storm-starter</artifactId>
-            <version>1.0.3</version>
-        </dependency>
 
 
         <dependency>

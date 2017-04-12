@@ -10,6 +10,9 @@ spring:
       ddl-auto: update
   cache:
     cache-names: usercache
+  jackson:
+    serialization:
+      WRITE_SINGLE_ELEM_ARRAYS_UNWRAPPED: true
 security:
   ignored: /v2/api-docs,/swagger-resources/**,/swagger-ui.html, /webjars/**
   basic:
@@ -21,6 +24,8 @@ debug: true
 logging:
   level:
     org.hibernate.SQL: debug
+
+
 
 
 
