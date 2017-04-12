@@ -1,13 +1,16 @@
 package com.ghca.ceip.security.restcontroller;
 
+import com.ghca.ceip.security.entity.Permission;
+import com.ghca.ceip.security.entity.Role;
+import com.ghca.ceip.security.entity.User;
+import com.ghca.ceip.security.repository.PermissionReository;
+import com.ghca.ceip.security.repository.RoleRepository;
+import com.ghca.ceip.security.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.provisioning.GroupManager;
-import org.springframework.security.provisioning.UserDetailsManager;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by gh on 2017/4/11.
@@ -16,6 +19,37 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/security")
 public class SecurityController {
+
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
+
+    @Autowired
+    private PermissionReository permissionReository;
+
+
+    @PostMapping("/user")
+    public void createUser(@RequestBody User user) {
+        userRepository.createUser(user);
+    }
+
+    @PostMapping("/role")
+    public void createRole(@RequestBody Role role) {
+        roleRepository.save(role);
+    }
+
+    @PostMapping("/permission")
+    public void createPermission(@RequestBody Permission permission) {
+        permissionReository.save(permission);
+    }
+
+    @GetMapping("/permission")
+    public List<Permission> listPermission() {
+        return new ArrayList<>();
+    }
 
 
 

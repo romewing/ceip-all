@@ -1,15 +1,27 @@
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://127.0.0.1:3306/ceip_security?useUnicode=true&characterEncoding=UTF-8
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: update
+  cache:
+    cache-names: usercache
 security:
   ignored: /v2/api-docs,/swagger-resources/**,/swagger-ui.html, /webjars/**
+  basic:
+    enabled: false
 management:
   security:
     enabled: false
+debug: true
+logging:
+  level:
+    org.hibernate.SQL: debug
+
+
+
+
