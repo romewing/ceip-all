@@ -1,5 +1,6 @@
 package com.ghca.ceip.security.entity;
 
+import com.fasterxml.jackson.annotation.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -27,6 +28,7 @@ public class Role implements GrantedAuthority {
     private String name;
 
     @CreatedBy
+    @ManyToOne
     private User createUser;
 
     @CreatedDate
@@ -40,11 +42,13 @@ public class Role implements GrantedAuthority {
     private Set<Permission> permissions = new HashSet<>();
 
     @Override
+    @JsonIgnore
     public String getAuthority() {
         return name;
     }
 
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     public Set<User> getUsers() {
         return users;
     }
@@ -69,6 +73,7 @@ public class Role implements GrantedAuthority {
         this.users = users;
     }
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     public Set<Permission> getPermissions() {
         return permissions;
     }
@@ -81,6 +86,7 @@ public class Role implements GrantedAuthority {
         return createTime;
     }
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     public User getCreateUser() {
         return createUser;
     }

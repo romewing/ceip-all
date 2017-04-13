@@ -6,12 +6,15 @@ import com.ghca.ceip.security.entity.User;
 import com.ghca.ceip.security.repository.PermissionReository;
 import com.ghca.ceip.security.repository.RoleRepository;
 import com.ghca.ceip.security.repository.UserRepository;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Created by gh on 2017/4/11.
@@ -37,9 +40,17 @@ public class SecurityController {
         userRepository.save(user);
     }
 
-    @GetMapping("/user/{username}")
-    public User getUser(@PathVariable String username) {
-        return (User) userRepository.findByUsername(username);
+    @GetMapping(value = {"/user", "/user/{id}"})
+    public List<User> listUser(@PathVariable(required = false) String id) {
+        if(StringUtils.isNotBlank(id)) {
+            User user = userRepository.findByUsername(id);
+            List<User> list = new ArrayList<>();
+            list.add(user);
+            return list;
+        }
+        else {
+            return userRepository.findAll();
+        }
     }
 
     @PostMapping("/role")
@@ -52,9 +63,15 @@ public class SecurityController {
         permissionReository.save(permission);
     }
 
-    @GetMapping("/permission")
-    public List<Permission> listPermission() {
+    @GetMapping("/permission/*")
+    public List<Permission> listPermission(@PathVariable String id) {
         return new ArrayList<>();
+    }
+
+    public static void main(String[] args) {
+        String s = "\\*";
+        boolean b = Pattern.compile(s).matcher("()").find();
+        System.out.println(b);
     }
 
 

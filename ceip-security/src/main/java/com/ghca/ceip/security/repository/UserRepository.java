@@ -12,5 +12,5 @@ import org.springframework.security.provisioning.UserDetailsManager;
  */
 public interface UserRepository extends JpaRepository<User, String>{
 
-    User findByUsername(String username);
+    User findByUsername(String id);
 }

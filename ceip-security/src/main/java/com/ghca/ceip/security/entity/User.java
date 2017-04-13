@@ -1,6 +1,7 @@
 package com.ghca.ceip.security.entity;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
+import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.annotation.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -38,11 +39,12 @@ public class User implements UserDetails {
     private Date updateTime;  //密码修改时间
 
     @CreatedBy
+    @ManyToOne
     private User createUser;  //创建该用户的用户
 
     private Boolean locked;
 
-    private Boolean enable;
+    private Boolean enabled;
 
     private Boolean expired;
 
@@ -51,6 +53,7 @@ public class User implements UserDetails {
     private Set<Role> roles = new HashSet<>();
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
     }
@@ -66,23 +69,27 @@ public class User implements UserDetails {
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return getExpired();
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return locked;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return getExpired();
     }
 
+
     @Override
     public boolean isEnabled() {
-        return enable;
+        return enabled;
     }
 
     public String getId() {
@@ -97,6 +104,7 @@ public class User implements UserDetails {
         return updateTime;
     }
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     public User getCreateUser() {
         return createUser;
     }
@@ -105,14 +113,11 @@ public class User implements UserDetails {
         return locked;
     }
 
-    public Boolean getEnable() {
-        return enable;
-    }
-
     public Boolean getExpired() {
         return expired;
     }
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     public Set<Role> getRoles() {
         return roles;
     }
@@ -145,10 +150,6 @@ public class User implements UserDetails {
         this.locked = locked;
     }
 
-    public void setEnable(Boolean enable) {
-        this.enable = enable;
-    }
-
     public void setExpired(Boolean expired) {
         this.expired = expired;
     }
@@ -157,9 +158,17 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
     @Override
-    @JsonCreator
+    //@JsonValue
     public String toString() {
-        return super.toString();
+        JSONObject object = new JSONObject();
+        object.fluentPut("username", getUsername())
+                .fluentPut("password", getPassword())
+                .fluentPut("id", getId());
+        return object.toJSONString();
     }
 }
