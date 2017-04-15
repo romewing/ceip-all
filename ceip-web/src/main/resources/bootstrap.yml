@@ -10,7 +10,6 @@ spring:
   thymeleaf:
     cache: false
     mode: HTML
-
 eureka:
   instance:
     non-secure-port: ${server.port:8082}
@@ -18,5 +17,16 @@ eureka:
     service-url:
       defaultZone: http://${eureka.host:localhost}:${eureka.port:19000}/eureka/
 security:
-  basic:
+  ignored: /ace/assets/**
+  headers:
+    content-type: false
+  enable-csrf: false
+  user:
+    name: user
+    password: user
+logging:
+  level:
+    org.springframework: debug
+management:
+  security:
     enabled: false
