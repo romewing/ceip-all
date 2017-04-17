@@ -36,6 +36,7 @@ eureka:
 
 security:
   ignored: /ace/assets/**
+  enable-csrf: false
 logging:
   level:
     org.springframework: debug

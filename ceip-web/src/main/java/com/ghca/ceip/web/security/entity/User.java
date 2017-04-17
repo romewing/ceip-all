@@ -65,7 +65,7 @@ public class User implements UserDetails {
         for(Role role : roles) {
             set.addAll(role.getPermissions());
         }
-        return TreeUtil.merge(set);
+        return set;
     }
 
     @Override
@@ -80,17 +80,17 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return getExpired();
+        return !getExpired();
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return locked;
+        return !locked;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return getExpired();
+        return !getExpired();
     }
 
 

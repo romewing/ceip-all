@@ -19,6 +19,8 @@
 		<!-- text fonts -->
 		<link rel="stylesheet" href="ace/assets/css/fonts.googleapis.com.css" />
 
+		<link rel="stylesheet" href="css/zTreeStyle/zTreeStyle.css" />
+
 		<!-- ace styles -->
 		<link rel="stylesheet" href="ace/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
 
@@ -405,14 +407,14 @@
 					</div>
 				</div><!-- /.sidebar-shortcuts -->
 
-				<ul class="nav nav-list"id="navTree">
-					<!--
-					<li class="" th:each="permission: ${#authentication.authorities}">
+				<ul class="nav nav-list ztree" id="navTree">
+
+					<!--<li class="" th:each="permission: ${#authentication.authorities}">
 						<a href="permission.url" th:href="@{permission.url}">
 						<i class="menu-icon fa fa-tachometer"></i>
 						<span class="menu-text" th:text="${permission.name}"> Dashboard </span>
 						</a>
-						<b th:if="${permission.root}" class="arrow"></b>
+						<b th:if="${permission.parent}" class="arrow"></b>
 						<ul class="submenu">
 							<li th:each="chidlren:${permission.children}">
 								<span class="menu-text" th:text="${chidlren.name}">
@@ -421,8 +423,8 @@
 								<b class="arrow fa fa-angle-down"></b>
 							</li>
 						</ul>
-					</li>
-					<li class="">
+					</li>-->
+					<!--<li class="">
 						<a href="ace/index.html">
 							<i class="menu-icon fa fa-tachometer"></i>
 							<span class="menu-text"> Dashboard </span>
@@ -898,8 +900,7 @@
 								<b class="arrow"></b>
 							</li>
 						</ul>
-					</li>
-					-->
+					</li>-->
 				</ul><!-- /.nav-list -->
 
 				<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
@@ -1078,11 +1079,13 @@
                 },
                 data: {
                     simpleData: {
-                        enable:true,
-                        idKey: "id",
-                        pIdKey: "pId",
-                        rootPId: ""
+                        enable:true
                     }
+                },
+                async: {
+                    enable: true,
+                    type: "get",
+                    url:"security/permission"
                 },
                 callback: {
                     beforeClick: function(treeId, treeNode) {
@@ -1097,22 +1100,13 @@
                     }
                 }
             };
-            var zNodes =[
-                {id:1, pId:0, name:"[core] 基本功能 演示", open:true},
-                {id:101, pId:1, name:"最简单的树 --  标准 JSON 数据", file:"core/standardData"},
-                {id:102, pId:1, name:"最简单的树 --  简单 JSON 数据", file:"core/simpleData"},
-                {id:103, pId:1, name:"不显示 连接线", file:"core/noline"},
-                {id:104, pId:1, name:"不显示 节点 图标", file:"core/noicon"},
-                {id:105, pId:1, name:"自定义图标 --  icon 属性", file:"core/custom_icon"},
-                {id:106, pId:1, name:"自定义图标 --  iconSkin 属性", file:"core/custom_iconSkin"},
-                {id:107, pId:1, name:"自定义字体", file:"core/custom_font"}]
+
             $(document).ready(function(){
-                var t = $("#navTree");
-                t = $.fn.zTree.init(t, setting, zNodes);
+              //  var t = $("#navTree");
+				t = $.fn.zTree.init($("#navTree"), setting);
                // demoIframe = $("#testIframe");
                 //demoIframe.bind("load", loadReady);
-                var zTree = $.fn.zTree.getZTreeObj("tree");
-                zTree.selectNode(zTree.getNodeByParam("id", 101));
+                //var zTree = $.fn.zTree.getZTreeObj("navTree");
             });
 
 

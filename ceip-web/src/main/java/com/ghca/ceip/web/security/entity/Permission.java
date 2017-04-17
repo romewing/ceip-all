@@ -1,7 +1,9 @@
 package com.ghca.ceip.web.security.entity;
 
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.annotation.*;
 import com.ghca.ceip.web.security.util.TreeNode;
+import netscape.javascript.JSObject;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.boot.actuate.audit.listener.AuditListener;
 import org.springframework.security.core.GrantedAuthority;
@@ -122,5 +124,20 @@ public class Permission implements TreeNode<Permission>, GrantedAuthority {
             return ((Permission) obj).getId().equals(getId());
         }
         return false;
+    }
+
+    @JsonValue
+    public JSONObject jsonValue() {
+        JSONObject object = new JSONObject();
+        object.put("id", getId());
+        object.put("name", getName());
+        Permission parent = getParent();
+        object.put("pId", parent==null?"":parent.getId());
+        return object;
+    }
+
+    @Override
+    public String toString() {
+        return jsonValue().toJSONString();
     }
 }
