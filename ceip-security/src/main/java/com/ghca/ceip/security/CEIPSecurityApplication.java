@@ -70,14 +70,4 @@ public class CEIPSecurityApplication {
         return username -> userRepository.findByUsername(username);
     }
 
-    @Bean
-    public WebMvcConfigurer webMvcConfigurer() {
-       return new WebMvcConfigurerAdapter() {
-           @Override
-           public void addCorsMappings(CorsRegistry registry) {
-               registry.addMapping("/**");
-           }
-       };
-    }
-
 }

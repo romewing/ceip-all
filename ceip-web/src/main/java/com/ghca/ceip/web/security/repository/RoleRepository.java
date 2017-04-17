@@ -1,6 +1,6 @@
-package com.ghca.ceip.security.repository;
+package com.ghca.ceip.web.security.repository;
 
-import com.ghca.ceip.security.entity.Role;
+import com.ghca.ceip.web.security.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestBody;

@@ -1,4 +1,4 @@
-package com.ghca.ceip.security.entity;
+package com.ghca.ceip.web.security.entity;
 
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.annotation.*;
@@ -39,7 +39,7 @@ public class Role implements GrantedAuthority {
     @ManyToMany(mappedBy = "roles")
     private Set<User> users = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "role_permission", inverseJoinColumns = @JoinColumn(name = "permission_id"), joinColumns = @JoinColumn(name = "role_id"))
     private Set<Permission> permissions = new HashSet<>();
 

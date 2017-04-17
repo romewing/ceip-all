@@ -1,12 +1,9 @@
-package com.ghca.ceip.security.util;
+package com.ghca.ceip.web.security.util;
 
 import javafx.scene.Parent;
 import org.springframework.security.access.method.P;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Created by gh on 2017/4/14.
@@ -14,18 +11,16 @@ import java.util.Optional;
 public class TreeUtil {
 
 
-    public static Collection<TreeNode> merge(Collection<TreeNode> treeNodes) {
-        List<TreeNode> trees = new ArrayList<>();
-
-        for (TreeNode treeNode : treeNodes) {
-
+    public static <T extends TreeNode> Collection<T> merge(Collection<T> treeNodes) {
+        Collection<T> trees = new HashSet<>();
+        for (T treeNode : treeNodes) {
             if (treeNode.getParent()==null) {
                 trees.add(treeNode);
             }
-            for (TreeNode it : treeNodes) {
+            for (T it : treeNodes) {
                 if (treeNode.equals(it.getParent())) {
                     if (treeNode.getChildren() == null) {
-                        treeNode.setChildren(new ArrayList<TreeNode>());
+                        treeNode.setChildren(new HashSet());
                     }
                     treeNode.getChildren().add(it);
                 }
@@ -34,7 +29,7 @@ public class TreeUtil {
         return trees;
     }
 
-    public static void main(String[] args) {
+/*    public static void main(String[] args) {
         SimpleTreeNode node1 = new SimpleTreeNode("1");
         SimpleTreeNode node11 = new SimpleTreeNode("11", node1);
         SimpleTreeNode node12 = new SimpleTreeNode("12", node1);
@@ -57,5 +52,5 @@ public class TreeUtil {
             System.out.println(s);
         }
 
-    }
+    }*/
 }

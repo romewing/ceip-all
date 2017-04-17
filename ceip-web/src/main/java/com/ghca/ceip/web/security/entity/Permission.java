@@ -1,9 +1,10 @@
-package com.ghca.ceip.security.entity;
+package com.ghca.ceip.web.security.entity;
 
 import com.fasterxml.jackson.annotation.*;
-import com.ghca.ceip.security.util.TreeNode;
+import com.ghca.ceip.web.security.util.TreeNode;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.boot.actuate.audit.listener.AuditListener;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,7 +16,7 @@ import java.util.*;
 
 @Entity
 @EntityListeners(AuditListener.class)
-public class Permission implements TreeNode<Permission> {
+public class Permission implements TreeNode<Permission>, GrantedAuthority {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
@@ -106,7 +107,20 @@ public class Permission implements TreeNode<Permission> {
     }
 
     @Override
+    public String getAuthority() {
+        return name;
+    }
+
+    @Override
     public void setParent(Permission parent) {
 
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Permission) {
+            return ((Permission) obj).getId().equals(getId());
+        }
+        return false;
     }
 }

@@ -405,7 +405,23 @@
 					</div>
 				</div><!-- /.sidebar-shortcuts -->
 
-				<ul class="nav nav-list">
+				<ul class="nav nav-list"id="navTree">
+					<!--
+					<li class="" th:each="permission: ${#authentication.authorities}">
+						<a href="permission.url" th:href="@{permission.url}">
+						<i class="menu-icon fa fa-tachometer"></i>
+						<span class="menu-text" th:text="${permission.name}"> Dashboard </span>
+						</a>
+						<b th:if="${permission.root}" class="arrow"></b>
+						<ul class="submenu">
+							<li th:each="chidlren:${permission.children}">
+								<span class="menu-text" th:text="${chidlren.name}">
+								UI &amp; Elements
+								</span>
+								<b class="arrow fa fa-angle-down"></b>
+							</li>
+						</ul>
+					</li>
 					<li class="">
 						<a href="ace/index.html">
 							<i class="menu-icon fa fa-tachometer"></i>
@@ -883,6 +899,7 @@
 							</li>
 						</ul>
 					</li>
+					-->
 				</ul><!-- /.nav-list -->
 
 				<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
@@ -1029,22 +1046,78 @@
 
 		<!--[if !IE]> -->
 		<script src="ace/assets/js/jquery-2.1.4.min.js"></script>
+		<script src="ace/assets/js/bootstrap.min.js"></script>
+
+
+		<!-- ace scripts -->
+		<script src="ace/assets/js/ace-elements.min.js"></script>
+		<script src="ace/assets/js/ace.min.js"></script>
+		<script src="js/jquery.ztree.all.js"></script>
 
 		<!-- <![endif]-->
 
 		<!--[if IE]>
         <script src="ace/assets/js/jquery-1.11.3.min.js"></script>
+
         <![endif]-->
 		<script type="text/javascript">
 			if('ontouchstart' in document.documentElement) document.write("<script src='ace/assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+            function loadReady() {
+                var bodyH = demoIframe.contents().find("body").get(0).scrollHeight,
+                    htmlH = demoIframe.contents().find("html").get(0).scrollHeight,
+                    maxH = Math.max(bodyH, htmlH), minH = Math.min(bodyH, htmlH),
+                    h = demoIframe.height() >= maxH ? minH:maxH ;
+                if (h < 530) h = 530;
+                demoIframe.height(h);
+            }
+            var setting = {
+                view: {
+                    dblClickExpand: false,
+                    showLine: true,
+                    selectedMulti: false
+                },
+                data: {
+                    simpleData: {
+                        enable:true,
+                        idKey: "id",
+                        pIdKey: "pId",
+                        rootPId: ""
+                    }
+                },
+                callback: {
+                    beforeClick: function(treeId, treeNode) {
+                        var zTree = $.fn.zTree.getZTreeObj("tree");
+                        if (treeNode.isParent) {
+                            zTree.expandNode(treeNode);
+                            return false;
+                        } else {
+                            demoIframe.attr("src",treeNode.file + ".html");
+                            return true;
+                        }
+                    }
+                }
+            };
+            var zNodes =[
+                {id:1, pId:0, name:"[core] 基本功能 演示", open:true},
+                {id:101, pId:1, name:"最简单的树 --  标准 JSON 数据", file:"core/standardData"},
+                {id:102, pId:1, name:"最简单的树 --  简单 JSON 数据", file:"core/simpleData"},
+                {id:103, pId:1, name:"不显示 连接线", file:"core/noline"},
+                {id:104, pId:1, name:"不显示 节点 图标", file:"core/noicon"},
+                {id:105, pId:1, name:"自定义图标 --  icon 属性", file:"core/custom_icon"},
+                {id:106, pId:1, name:"自定义图标 --  iconSkin 属性", file:"core/custom_iconSkin"},
+                {id:107, pId:1, name:"自定义字体", file:"core/custom_font"}]
+            $(document).ready(function(){
+                var t = $("#navTree");
+                t = $.fn.zTree.init(t, setting, zNodes);
+               // demoIframe = $("#testIframe");
+                //demoIframe.bind("load", loadReady);
+                var zTree = $.fn.zTree.getZTreeObj("tree");
+                zTree.selectNode(zTree.getNodeByParam("id", 101));
+            });
+
+
 		</script>
-		<script src="ace/assets/js/bootstrap.min.js"></script>
 
-		<!-- page specific plugin scripts -->
-
-		<!-- ace scripts -->
-		<script src="ace/assets/js/ace-elements.min.js"></script>
-		<script src="ace/assets/js/ace.min.js"></script>
 
 		<!-- inline scripts related to this page -->
 	</body>

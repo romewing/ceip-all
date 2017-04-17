@@ -1,7 +1,11 @@
 package com.ghca.ceip.web.service;
 
+import org.springframework.cloud.netflix.feign.FeignClient;
+
 /**
  * Created by gh on 2017/4/17.
  */
-public class SecurityService {
+
+@FeignClient("security")
+public interface SecurityService {
 }

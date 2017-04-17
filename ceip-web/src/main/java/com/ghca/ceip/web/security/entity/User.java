@@ -1,9 +1,9 @@
-package com.ghca.ceip.security.entity;
+package com.ghca.ceip.web.security.entity;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONCreator;
 import com.fasterxml.jackson.annotation.*;
+import com.ghca.ceip.web.security.util.TreeUtil;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -17,7 +17,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -47,7 +46,7 @@ public class User implements UserDetails {
     private Date updateTime;  //密码修改时间
 
     @CreatedBy
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private User createUser;  //创建该用户的用户
 
     private Boolean locked;
@@ -56,13 +55,17 @@ public class User implements UserDetails {
 
     private Boolean expired;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", inverseJoinColumns = @JoinColumn(name = "role_id"), joinColumns = @JoinColumn(name = "user_id"))
     private Set<Role> roles = new HashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles;
+        Collection<Permission> set = new HashSet<>();
+        for(Role role : roles) {
+            set.addAll(role.getPermissions());
+        }
+        return TreeUtil.merge(set);
     }
 
     @Override
@@ -195,4 +198,6 @@ public class User implements UserDetails {
         this.username = username;
         this.password = passord;
     }
+
+
 }

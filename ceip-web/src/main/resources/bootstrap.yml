@@ -10,20 +10,32 @@ spring:
   thymeleaf:
     cache: false
     mode: HTML
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://127.0.0.1:3306/ceip_security?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+  cache:
+      cache-names: usercache
+  jackson:
+    serialization:
+      WRITE_SINGLE_ELEM_ARRAYS_UNWRAPPED: true
+    mapper:
+      AUTO_DETECT_FIELDS: false
+      AUTO_DETECT_SETTERS: false
 eureka:
   instance:
     non-secure-port: ${server.port:8082}
   client:
     service-url:
       defaultZone: http://${eureka.host:localhost}:${eureka.port:19000}/eureka/
+
 security:
   ignored: /ace/assets/**
-  headers:
-    content-type: false
-  enable-csrf: false
-  user:
-    name: user
-    password: user
 logging:
   level:
     org.springframework: debug

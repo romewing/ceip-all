@@ -1,6 +1,8 @@
 
 package com.ghca.ceip.web;
 
+import com.ghca.ceip.web.security.entity.User;
+import com.ghca.ceip.web.security.repository.UserRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
@@ -25,11 +27,14 @@ public class CEIPWebApplication {
     }
 
 
-    public UserDetailsService userDetailsService() {
+    @Bean
+    public UserDetailsService userDetailsService(UserRepository userRepository) {
         return new UserDetailsService() {
             @Override
             public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-                return null;
+                System.out.println("AAAA");
+                User user = userRepository.findByUsername(username);
+                return user;
             }
         };
     }

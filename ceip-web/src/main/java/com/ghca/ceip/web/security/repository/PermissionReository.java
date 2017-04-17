@@ -1,6 +1,6 @@
-package com.ghca.ceip.security.repository;
+package com.ghca.ceip.web.security.repository;
 
-import com.ghca.ceip.security.entity.Permission;
+import com.ghca.ceip.web.security.entity.Permission;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

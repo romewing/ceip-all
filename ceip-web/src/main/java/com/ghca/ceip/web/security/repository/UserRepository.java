@@ -1,6 +1,6 @@
-package com.ghca.ceip.security.repository;
+package com.ghca.ceip.web.security.repository;
 
-import com.ghca.ceip.security.entity.User;
+import com.ghca.ceip.web.security.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -1,4 +1,4 @@
-package com.ghca.ceip.security.util;
+package com.ghca.ceip.web.security.util;
 
 
 import java.util.Collection;
