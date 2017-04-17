@@ -1,13 +1,13 @@
 package com.ghca.ceip.security.entity;
 
+import com.fasterxml.jackson.annotation.*;
+import com.ghca.ceip.security.util.TreeNode;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.boot.actuate.audit.listener.AuditListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by gh on 2017/4/12.
@@ -15,7 +15,7 @@ import java.util.Set;
 
 @Entity
 @EntityListeners(AuditListener.class)
-public class Permission implements Serializable{
+public class Permission implements TreeNode<Permission> {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
@@ -27,6 +27,7 @@ public class Permission implements Serializable{
 
     private String url;
 
+    @ManyToOne
     private User createUser;
 
     private Date createTime;
@@ -36,7 +37,7 @@ public class Permission implements Serializable{
     private Permission parent;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "parent", fetch = FetchType.EAGER)
-    private Set<Permission> children = new HashSet<>();
+    private Collection<Permission> children = new HashSet<>();
 
 
     public String getId() {
@@ -71,6 +72,7 @@ public class Permission implements Serializable{
         this.url = url;
     }
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     public User getCreateUser() {
         return createUser;
     }
@@ -87,19 +89,24 @@ public class Permission implements Serializable{
         this.createTime = createTime;
     }
 
+
+    @Override
     public Permission getParent() {
         return parent;
     }
 
-    public void setParent(Permission parent) {
-        this.parent = parent;
-    }
-
-    public Set<Permission> getChildren() {
+    @Override
+    public Collection<Permission> getChildren() {
         return children;
     }
 
-    public void setChildren(Set<Permission> children) {
-        this.children = children;
+    @Override
+    public void setChildren(Collection<Permission> children) {
+
+    }
+
+    @Override
+    public void setParent(Permission parent) {
+
     }
 }

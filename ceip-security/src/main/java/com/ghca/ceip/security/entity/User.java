@@ -1,6 +1,8 @@
 package com.ghca.ceip.security.entity;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.annotation.JSONCreator;
 import com.fasterxml.jackson.annotation.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedBy;
@@ -15,6 +17,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Created by Administrator on 2017/4/11.
@@ -22,6 +26,10 @@ import java.util.Set;
 @Entity
 @EntityListeners({AuditingEntityListener.class})
 public class User implements UserDetails {
+
+    public User(){
+
+    };
 
     @Id
     @GeneratedValue(generator = "uuid")
@@ -53,7 +61,6 @@ public class User implements UserDetails {
     private Set<Role> roles = new HashSet<>();
 
     @Override
-    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
     }
@@ -69,19 +76,16 @@ public class User implements UserDetails {
     }
 
     @Override
-    @JsonIgnore
     public boolean isAccountNonExpired() {
         return getExpired();
     }
 
     @Override
-    @JsonIgnore
     public boolean isAccountNonLocked() {
         return locked;
     }
 
     @Override
-    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return getExpired();
     }
@@ -104,7 +108,6 @@ public class User implements UserDetails {
         return updateTime;
     }
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     public User getCreateUser() {
         return createUser;
     }
@@ -117,7 +120,6 @@ public class User implements UserDetails {
         return expired;
     }
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     public Set<Role> getRoles() {
         return roles;
     }
@@ -162,13 +164,35 @@ public class User implements UserDetails {
         this.enabled = enabled;
     }
 
-    @Override
-    //@JsonValue
-    public String toString() {
-        JSONObject object = new JSONObject();
-        object.fluentPut("username", getUsername())
+    @JsonValue
+    public JSONObject jsonValue() {
+        JSONObject object = new JSONObject(true);
+        object.fluentPut("id", getId())
+                .fluentPut("username", getUsername())
                 .fluentPut("password", getPassword())
-                .fluentPut("id", getId());
-        return object.toJSONString();
+                .fluentPut("locked", getLocked())
+                .fluentPut("enabled", isEnabled())
+                .fluentPut("expired", getExpired());
+        if(createUser==null){
+            object.put("createUser", "");
+        }
+        else {
+            object.put("createUser", createUser.getId());
+        }
+        object.fluentPut("createTime", getCreateTime())
+                .fluentPut("updateTime", getUpdateTime())
+                .fluentPut("roles", getRoles().stream().map(role -> role.getId()).collect(Collectors.toList()));
+        return object;
+    }
+
+    @Override
+    public String toString() {
+        return jsonValue().toJSONString();
+    }
+
+    @JSONCreator
+    public User(String username, String passord) {
+        this.username = username;
+        this.password = passord;
     }
 }

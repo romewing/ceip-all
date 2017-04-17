@@ -1,5 +1,6 @@
 package com.ghca.ceip.security.entity;
 
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.annotation.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedBy;
@@ -18,6 +19,7 @@ import java.util.Set;
  */
 @Entity
 @EntityListeners(AuditingEntityListener.class)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 public class Role implements GrantedAuthority {
 
 
@@ -48,7 +50,6 @@ public class Role implements GrantedAuthority {
     }
 
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     public Set<User> getUsers() {
         return users;
     }
@@ -73,7 +74,6 @@ public class Role implements GrantedAuthority {
         this.users = users;
     }
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     public Set<Permission> getPermissions() {
         return permissions;
     }
@@ -86,8 +86,14 @@ public class Role implements GrantedAuthority {
         return createTime;
     }
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     public User getCreateUser() {
         return createUser;
+    }
+
+
+    @JsonValue
+    public JSONObject jsonValue() {
+        JSONObject object = new JSONObject(true);
+        return object;
     }
 }

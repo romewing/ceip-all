@@ -19,6 +19,7 @@ spring:
 security:
   basic:
     enabled: false
+
 management:
   security:
     enabled: false
@@ -26,7 +27,6 @@ debug: true
 logging:
   level:
     org.hibernate.SQL: debug
-
 
 
 

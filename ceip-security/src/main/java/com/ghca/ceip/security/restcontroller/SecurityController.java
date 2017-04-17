@@ -68,11 +68,6 @@ public class SecurityController {
         return new ArrayList<>();
     }
 
-    public static void main(String[] args) {
-        String s = "\\*";
-        boolean b = Pattern.compile(s).matcher("()").find();
-        System.out.println(b);
-    }
 
 
 
