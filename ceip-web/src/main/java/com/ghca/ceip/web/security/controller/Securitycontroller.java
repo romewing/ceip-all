@@ -1,4 +1,4 @@
-package com.ghca.ceip.web.controller.security;
+package com.ghca.ceip.web.security.controller;
 
 import com.ghca.ceip.web.security.entity.Permission;
 import com.ghca.ceip.web.security.repository.PermissionReository;
@@ -15,6 +15,7 @@ import java.security.Principal;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Administrator on 2017/4/18.
@@ -30,10 +31,10 @@ public class Securitycontroller {
     @RequestMapping(value = "/permission", method = RequestMethod.GET)
     @ResponseBody
     public Collection<? extends GrantedAuthority> list(Principal principal) {
-        if(principal instanceof Authentication) {
-            return  ((Authentication) principal).getAuthorities();
+        if(principal instanceof Permission) {
+            List<? extends GrantedAuthority> collect = ((Authentication) principal).getAuthorities().stream().filter((authority) -> authority instanceof Permission && ((Permission) authority).getParent() == null).collect(Collectors.toList());
+            return collect;
         }
         return Collections.emptyList();
-
     }
 }

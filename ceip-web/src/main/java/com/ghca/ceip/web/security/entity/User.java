@@ -65,7 +65,7 @@ public class User implements UserDetails {
         for(Role role : roles) {
             set.addAll(role.getPermissions());
         }
-        return set;
+        return set.stream().filter((permission -> permission.getParent()==null)).collect(Collectors.toList());
     }
 
     @Override
