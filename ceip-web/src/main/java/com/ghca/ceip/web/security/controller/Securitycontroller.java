@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
  * Created by Administrator on 2017/4/18.
  */
 @Controller
-@RequestMapping("/security")
+@RequestMapping("/system/security")
 public class Securitycontroller {
 
     @Autowired
@@ -35,6 +35,14 @@ public class Securitycontroller {
             List<? extends GrantedAuthority> collect = ((Authentication) principal).getAuthorities().stream().filter((authority) -> authority instanceof Permission && ((Permission) authority).getParent() == null).collect(Collectors.toList());
             return collect;
         }
+        else if(principal instanceof UsernamePasswordAuthenticationToken) {
+            return ((UsernamePasswordAuthenticationToken) principal).getAuthorities();
+        }
         return Collections.emptyList();
+    }
+
+    @RequestMapping("/authority")
+    public String test() {
+        return "tables";
     }
 }

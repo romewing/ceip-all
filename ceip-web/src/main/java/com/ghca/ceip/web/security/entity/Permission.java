@@ -93,6 +93,16 @@ public class Permission implements TreeNode<Permission>, GrantedAuthority {
     }
 
 
+    public String getFullUrl() {
+        if(parent == null) {
+            return getUrl();
+        }
+        else {
+            return parent.getFullUrl()+"/"+getUrl();
+        }
+    }
+
+
     @Override
     public Permission getParent() {
         return parent;
