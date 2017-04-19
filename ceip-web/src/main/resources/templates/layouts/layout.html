@@ -1,160 +1,373 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>Blank Page - Ace Admin</title>
 
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 
-    <title>Gentelella Alela! | </title>
+		<!-- bootstrap & fontawesome -->
+		<link rel="stylesheet" data-th-href="@{/ace_admin1.3.1/assets/css/bootstrap.min.css}" />
+		<link rel="stylesheet" data-th-href="@{/ace_admin1.3.1/assets/css/font-awesome.min.css}" />
 
-    <!-- Bootstrap -->
-    <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="nprogress/nprogress.css" rel="stylesheet">
-    <!-- iCheck -->
-    <link href="iCheck/skins/flat/green.css" rel="stylesheet">
+		<!-- page specific plugin styles -->
 
-    <!-- bootstrap-progressbar -->
-    <link href="bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
-    <!-- JQVMap -->
-    <link href="jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
-    <!-- bootstrap-daterangepicker -->
-    <link href="bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+		<!-- text fonts -->
+		<link rel="stylesheet" data-th-href="@{/ace_admin1.3.1/assets/css/ace-fonts.css}" />
+		<link rel="stylesheet" data-th-href="@{/ace_admin1.3.1/assets/css/ace.min.css}" id="main-ace-style"/>
 
-    <!-- bootstrap-wysiwyg -->
-    <link href="google-code-prettify/bin/prettify.min.css" rel="stylesheet">
-    <!-- Select2 -->
-    <link href="select2/dist/css/select2.min.css" rel="stylesheet">
 
-    <!-- Switchery -->
-    <link href="switchery/dist/switchery.min.css" rel="stylesheet">
-    <!-- starrr -->
-    <link href="starrr/dist/starrr.css" rel="stylesheet">
 
-    <!-- Datatables -->
-    <link href="datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-    <link href="datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
-    <link href="datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
-    <link href="datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
-    <link href="datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom Theme Style -->
-    <link href="css/custom.min.css" rel="stylesheet">
-</head>
-<body class="nav-md footer_fixed">
-<div class="container body">
-    <div class="main_container">
-        <div class="col-md-3 left_col menu_fixed">
-            <div class="left_col scroll-view" th:replace="fragments/side-bar :: side-bar">
-            </div>
-        </div>
-        <!-- top navigation -->
-        <div class="top_nav">
-            <div class="nav_menu">
-                <nav>
-                    <div class="nav toggle">
-                        <a id="menu_toggle"><i class="fa fa-bars"></i></a>
-                    </div>
+		<!--[if lte IE 9]>
+        <link rel="stylesheet" data-th-href="@{/ace_admin1.3.1/assets/css/ace-part2.min.css}"
+              class="ace-main-stylesheet"/>
+        <![endif]-->
+		<link rel="stylesheet" data-th-href="@{/ace_admin1.3.1/assets/css/ace-skins.min.css}" />
+		<link rel="stylesheet" data-th-href="@{/ace_admin1.3.1/assets/css/ace-rtl.min.css}" />
 
-                    <ul class="nav navbar-nav navbar-right" th:replace="fragments/top-navigation :: top-navigation">
-                    </ul>
-                </nav>
-            </div>
-        </div>
-        <!-- /top navigation -->
+		<!--[if lte IE 9]>
+        <link rel="stylesheet" data-th-href="@{/ace/assets/css/ace-ie.min.css}"/>
+        <![endif]-->
 
-        <!-- page content -->
-        <div class="right_col" role="main" layout:fragment="page-content">
-        </div>
-        <!-- /page content -->
+		<!-- inline styles related to this page -->
 
-        <!-- footer content -->
-        <footer>
-            <div class="pull-right" th:replace="fragments/footer :: footer">
-                Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-            </div>
-            <div class="clearfix"></div>
-        </footer>
-        <!-- /footer content -->
-    </div>
-</div>
-<!-- jQuery -->
-<script src="jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap -->
-<script src="bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- FastClick -->
-<script src="fastclick/lib/fastclick.js"></script>
-<!-- NProgress -->
-<script src="nprogress/nprogress.js"></script>
-<!-- Chart.js -->
-<script src="Chart.js/dist/Chart.min.js"></script>
-<!-- gauge.js -->
-<script src="gauge.js/dist/gauge.min.js"></script>
-<!-- bootstrap-progressbar -->
-<script src="bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
-<!-- iCheck -->
-<script src="iCheck/icheck.min.js"></script>
-<!-- Skycons -->
-<script src="skycons/skycons.js"></script>
-<!-- Flot -->
-<script src="Flot/jquery.flot.js"></script>
-<script src="Flot/jquery.flot.pie.js"></script>
-<script src="Flot/jquery.flot.time.js"></script>
-<script src="Flot/jquery.flot.stack.js"></script>
-<script src="Flot/jquery.flot.resize.js"></script>
-<!-- Flot plugins -->
-<script src="flot.orderbars/js/jquery.flot.orderBars.js"></script>
-<script src="flot-spline/js/jquery.flot.spline.min.js"></script>
-<script src="flot.curvedlines/curvedLines.js"></script>
-<!-- DateJS -->
-<script src="DateJS/build/date.js"></script>
-<!-- JQVMap -->
-<script src="jqvmap/dist/jquery.vmap.js"></script>
-<script src="jqvmap/dist/maps/jquery.vmap.world.js"></script>
-<script src="jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
-<!-- bootstrap-daterangepicker -->
-<script src="moment/min/moment.min.js"></script>
-<script src="bootstrap-daterangepicker/daterangepicker.js"></script>
-<script src="bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
-<script src="jquery.hotkeys/jquery.hotkeys.js"></script>
-<script src="google-code-prettify/src/prettify.js"></script>
-<!-- jQuery Tags Input -->
-<script src="jquery.tagsinput/src/jquery.tagsinput.js"></script>
-<!-- Switchery -->
-<script src="switchery/dist/switchery.min.js"></script>
-<!-- Select2 -->
-<script src="select2/dist/js/select2.full.min.js"></script>
-<!-- Parsley -->
-<script src="parsleyjs/dist/parsley.min.js"></script>
-<!-- Autosize -->
-<script src="autosize/dist/autosize.min.js"></script>
-<!-- jQuery autocomplete -->
-<script src="devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
-<!-- starrr -->
-<script src="starrr/dist/starrr.js"></script>
+		<!-- ace settings handler -->
+		<script data-th-src="@{/ace_admin1.3.1/assets/js/ace-extra.min.js}"></script>
 
-<script src="datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script src="datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-<script src="datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-<script src="datatables.net-buttons/js/buttons.flash.min.js"></script>
-<script src="datatables.net-buttons/js/buttons.html5.min.js"></script>
-<script src="datatables.net-buttons/js/buttons.print.min.js"></script>
-<script src="datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-<script src="datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-<script src="datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-<script src="datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-<script src="datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-<script src="jszip/dist/jszip.min.js"></script>
-<script src="pdfmake/build/pdfmake.min.js"></script>
-<script src="pdfmake/build/vfs_fonts.js"></script>
-<!-- Custom Theme Scripts -->
-<script src="js/custom.js"></script>
-</body>
+
+		<!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+		<!--[if lte IE 8]>
+        <script data-th-src="@{ace_admin1.3.1/assets/js/html5shiv.min.js}"></script>
+        <script data-th-src="@{ace_admin1.3.1/assets/js/respond.min.js}"></script>
+        <![endif]-->
+	</head>
+
+	<body class="no-skin">
+		<div id="navbar" class="navbar navbar-default">
+			<div class="navbar-container" id="navbar-container">
+				<button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
+					<span class="sr-only">Toggle sidebar</span>
+
+					<span class="icon-bar"></span>
+
+					<span class="icon-bar"></span>
+
+					<span class="icon-bar"></span>
+				</button>
+
+				<div class="navbar-header pull-left">
+					<a href="ace/index.html" class="navbar-brand">
+						<small>
+							<i class="fa fa-leaf"></i>
+							建筑企业信息平台
+						</small>
+					</a>
+				</div>
+
+				<div class="navbar-buttons navbar-header pull-right" role="navigation">
+					<ul class="nav ace-nav">
+						<li class="grey dropdown-modal">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+								<i class="ace-icon fa fa-tasks"></i>
+								<span class="badge badge-grey">4</span>
+							</a>
+
+						</li>
+
+						<li class="purple dropdown-modal">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+								<i class="ace-icon fa fa-bell icon-animated-bell"></i>
+								<span class="badge badge-important">8</span>
+							</a>
+
+						</li>
+
+						<li class="green dropdown-modal">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+								<i class="ace-icon fa fa-envelope icon-animated-vertical"></i>
+								<span class="badge badge-success">5</span>
+							</a>
+
+						</li>
+
+						<li class="light-blue dropdown-modal">
+							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
+								<img class="nav-user-photo" src="ace/assets/images/avatars/user.jpg" alt="Jason's Photo" />
+								<span class="user-info">
+									<small sec:authentication="name"></small>
+								</span>
+
+								<i class="ace-icon fa fa-caret-down"></i>
+							</a>
+
+							<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+								<li>
+									<a href="#">
+										<i class="ace-icon fa fa-cog"></i>
+										Settings
+									</a>
+								</li>
+
+								<li>
+									<a href="ace/profile.html">
+										<i class="ace-icon fa fa-user"></i>
+										Profile
+									</a>
+								</li>
+
+								<li class="divider"></li>
+
+								<li>
+									<a href="#">
+										<i class="ace-icon fa fa-power-off"></i>
+										Logout
+									</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div><!-- /.navbar-container -->
+		</div>
+
+		<div class="main-container ace-save-state" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.loadState('main-container')}catch(e){}
+			</script>
+
+			<div id="sidebar" class="sidebar responsive ace-save-state">
+				<script type="text/javascript">
+					try{ace.settings.loadState('sidebar')}catch(e){}
+				</script>
+
+				<div class="sidebar-shortcuts" id="sidebar-shortcuts">
+					<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+						<button class="btn btn-success">
+							<i class="ace-icon fa fa-signal"></i>
+						</button>
+
+						<button class="btn btn-info">
+							<i class="ace-icon fa fa-pencil"></i>
+						</button>
+
+						<button class="btn btn-warning">
+							<i class="ace-icon fa fa-users"></i>
+						</button>
+
+						<button class="btn btn-danger">
+							<i class="ace-icon fa fa-cogs"></i>
+						</button>
+					</div>
+
+					<div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+						<span class="btn btn-success"></span>
+
+						<span class="btn btn-info"></span>
+
+						<span class="btn btn-warning"></span>
+
+						<span class="btn btn-danger"></span>
+					</div>
+				</div><!-- /.sidebar-shortcuts -->
+
+				<ul class="nav nav-list" id="navTree">
+
+					<li class="open" th:each="permission, iterStat: ${#authentication.authorities}" th:id="${permissionStat.index}">
+						<a href="#" th:href="@{${permission.fullUrl}}" class="dropdown-toggle">
+							<i class="menu-icon fa fa-tachometer"></i>
+							<span class="menu-text" th:text="${permission.name}"> Dashboard </span>
+							<b th:if="${not #lists.isEmpty(permission.children)}" class="arrow fa fa-angle-down"></b>
+						</a>
+						<b class="arrow"></b>
+						<ul class="submenu" th:if="${not #lists.isEmpty(permission.children)}">
+							<li th:each="children:${permission.children}" class="">
+								<a th:href="@{${children.fullUrl}}"  class="dropdown-toggle">
+									<i class="menu-icon fa fa-caret-right"></i>
+									<span th:text="${children.name}"></span>
+									<b class="arrow fa fa-angle-down"></b>
+								</a>
+								<b class="arrow"></b>
+								<ul class="submenu" th:if="${not #lists.isEmpty(children.children)}">
+									<li th:each="children2:${children.children}" class="">
+										<a th:href="@{'/'+${children2.fullUrl}}">
+											<i class="menu-icon fa fa-caret-right"></i>
+											<span th:text="${children2.name}"></span>
+										</a>
+										<b class="arrow"></b>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+				</ul><!-- /.nav-list -->
+
+				<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+					<i id="sidebar-toggle-icon" class="ace-icon fa fa-angle-double-left ace-save-state" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+				</div>
+			</div>
+
+			<div class="main-content">
+					<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+						<ul class="breadcrumb">
+							<li>
+								<i class="ace-icon fa fa-home home-icon"></i>
+								<a href="#">Home</a>
+							</li>
+
+							<li>
+								<a href="#">Other Pages</a>
+							</li>
+							<li class="active">Blank Page</li>
+						</ul><!-- /.breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="ace-icon fa fa-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- /.nav-search -->
+					</div>
+
+					<div class="page-content">
+						<!--<div class="ace-settings-container" id="ace-settings-container">
+							<div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
+								<i class="ace-icon fa fa-cog bigger-130"></i>
+							</div>
+
+							<div class="ace-settings-box clearfix" id="ace-settings-box">
+								<div class="pull-left width-50">
+									<div class="ace-settings-item">
+										<div class="pull-left">
+											<select id="skin-colorpicker" class="hide">
+												<option data-skin="no-skin" value="#438EB9">#438EB9</option>
+												<option data-skin="skin-1" value="#222A2D">#222A2D</option>
+												<option data-skin="skin-2" value="#C6487E">#C6487E</option>
+												<option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
+											</select>
+										</div>
+										<span>&nbsp; Choose Skin</span>
+									</div>
+
+									<div class="ace-settings-item">
+										<input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-navbar" autocomplete="off" />
+										<label class="lbl" for="ace-settings-navbar"> Fixed Navbar</label>
+									</div>
+
+									<div class="ace-settings-item">
+										<input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-sidebar" autocomplete="off" />
+										<label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
+									</div>
+
+									<div class="ace-settings-item">
+										<input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-breadcrumbs" autocomplete="off" />
+										<label class="lbl" for="ace-settings-breadcrumbs"> Fixed Breadcrumbs</label>
+									</div>
+
+									<div class="ace-settings-item">
+										<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" autocomplete="off" />
+										<label class="lbl" for="ace-settings-rtl"> Right To Left (rtl)</label>
+									</div>
+
+									<div class="ace-settings-item">
+										<input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-add-container" autocomplete="off" />
+										<label class="lbl" for="ace-settings-add-container">
+											Inside
+											<b>.container</b>
+										</label>
+									</div>
+								</div>&lt;!&ndash; /.pull-left &ndash;&gt;
+
+								<div class="pull-left width-50">
+									<div class="ace-settings-item">
+										<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-hover" autocomplete="off" />
+										<label class="lbl" for="ace-settings-hover"> Submenu on Hover</label>
+									</div>
+
+									<div class="ace-settings-item">
+										<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-compact" autocomplete="off" />
+										<label class="lbl" for="ace-settings-compact"> Compact Sidebar</label>
+									</div>
+
+									<div class="ace-settings-item">
+										<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-highlight" autocomplete="off" />
+										<label class="lbl" for="ace-settings-highlight"> Alt. Active Item</label>
+									</div>
+								</div>
+							</div>
+						</div>-->
+
+						<div class="page-content-area" layout:fragment="content">
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+			</div><!-- /.main-content -->
+
+			<div class="footer">
+				<div class="footer-inner">
+					<div class="footer-content">
+						<span class="bigger-120">
+							<span class="blue bolder">Ace</span>
+							Application &copy; 2013-2014
+						</span>
+
+						&nbsp; &nbsp;
+						<span class="action-buttons">
+							<a href="#">
+								<i class="ace-icon fa fa-twitter-square light-blue bigger-150"></i>
+							</a>
+
+							<a href="#">
+								<i class="ace-icon fa fa-facebook-square text-primary bigger-150"></i>
+							</a>
+
+							<a href="#">
+								<i class="ace-icon fa fa-rss-square orange bigger-150"></i>
+							</a>
+						</span>
+					</div>
+				</div>
+			</div>
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+		<script data-th-src="@{/ace_admin1.3.1/assets/js/jquery.min.js}"></script>
+		<script data-th-src="@{/ace_admin1.3.1/assets/js/bootstrap.min.js}"></script>
+
+		<!-- ace scripts -->
+		<script data-th-src="@{/ace_admin1.3.1/assets/js/ace-elements.min.js}"></script>
+		<script data-th-src="@{/ace_admin1.3.1/assets/js/ace.min.js}"></script>
+
+
+		<!-- <![endif]-->
+
+
+        <![endif]-->
+		<script type="text/javascript">
+			if('ontouchstart' in document.documentElement) document.write("<script src='ace/assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+
+
+           $(document).ready(function(){
+                console.log("AAAAAAAAAAA");
+                $("#navTree li:first").addClass("open active");
+            });
+
+
+		</script>
+
+
+		<!-- inline scripts related to this page -->
+	</body>
 </html>

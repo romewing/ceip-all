@@ -1,7 +1,10 @@
-
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{layouts/layout}">
 <title>tables - ace admin</title>
 
 <!-- ajax layout which only needs content area -->
+<th:block layout:fragment="content">
 <div class="page-header">
 	<h1>
 		tables
@@ -2191,74 +2194,6 @@
 </div><!-- /.row -->
 
 <!-- page specific plugin scripts -->
-<script type="text/javascript">
-	var scripts = [null,"../../assets/js/jquery.datatables.min.js","../../assets/js/jquery.datatables.bootstrap.js", null]
-	ace.load_ajax_scripts(scripts, function() {
-	  //inline scripts related to this page
-		 jquery(function($) {
-		var otable1 =
-		$('#sample-table-2')
-		//.wrap("<div class='datatables_borderwrap' />")   //if you are applying horizontal scrolling (sscrollx)
-		.datatable( {
-			bautowidth: false,
-			"aocolumns": [
-			  { "bsortable": false },
-			  null, null,null, null, null,
-			  { "bsortable": false }
-			],
-			"aasorting": [],
 
-			//,
-			//"sscrolly": "200px",
-			//"bpaginate": false,
-
-			//"sscrollx": "100%",
-			//"sscrollxinner": "120%",
-			//"bscrollcollapse": true,
-			//note: if you are applying horizontal scrolling (sscrollx) on a ".table-bordered"
-			//you may want to wrap the table inside a "div.datatables_borderwrap" element
-
-			//"idisplaylength": 50
-	    } );
-		/**
-		var tabletools = new $.fn.datatable.tabletools( otable1, {
-			"sswfpath": "../../copy_csv_xls_pdf.swf",
-	        "buttons": [
-	            "copy",
-	            "csv",
-	            "xls",
-				"pdf",
-	            "print"
-	        ]
-	    } );
-	    $( tabletools.fncontainer() ).insertbefore('#sample-table-2');
-		*/
-
-
-		$(document).on('click', 'th input:checkbox' , function(){
-			var that = this;
-			$(this).closest('table').find('tr > td:first-child input:checkbox')
-			.each(function(){
-				this.checked = that.checked;
-				$(this).closest('tr').toggleclass('selected');
-			});
-		});
-
-
-		$('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
-		function tooltip_placement(context, source) {
-			var $source = $(source);
-			var $parent = $source.closest('table')
-			var off1 = $parent.offset();
-			var w1 = $parent.width();
-
-			var off2 = $source.offset();
-			//var w2 = $source.width();
-
-			if( parseint(off2.left) < parseint(off1.left) + parseint(w1 / 2) ) return 'right';
-			return 'left';
-		}
-	
-	})
-	});
-</script>
+</th:block>
+</html>

@@ -51,8 +51,8 @@ public class CEIPWebApplication {
                         .permitAll()
                         .and().authorizeRequests().antMatchers("/ace/assets/**").permitAll()
                         .anyRequest().authenticated()
-                        .and().headers().contentTypeOptions().disable()
-                       // .and().csrf().csrfTokenRepository(new HttpSessionCsrfTokenRepository())
+                        //.and().headers().contentTypeOptions().disable();
+                        .and().csrf().disable();
                 ;
             }
         };

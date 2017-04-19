@@ -45,4 +45,9 @@ public class Securitycontroller {
     public String test() {
         return "tables";
     }
+
+    @RequestMapping("/role")
+    public String test1() {
+        return "profile";
+    }
 }
