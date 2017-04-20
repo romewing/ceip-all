@@ -3,11 +3,16 @@ package com.ghca.ceip.web;
 
 import com.ghca.ceip.web.security.entity.User;
 import com.ghca.ceip.web.security.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,6 +25,7 @@ import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
  * Created by Administrator on 2017/3/18.
  */
 @SpringBootApplication
+@EnableOAuth2Sso
 public class CEIPWebApplication {
 
     public static void main(String[] args) {
@@ -39,22 +45,29 @@ public class CEIPWebApplication {
         };
     }
 
-    @Bean
-    @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
-    public WebSecurityConfigurerAdapter webSecurityConfigurer() {
-        return new WebSecurityConfigurerAdapter() {
 
-            @Override
-            protected void configure(HttpSecurity http) throws Exception {
-                http.formLogin()
-                        .loginPage("/").loginProcessingUrl("/login").successForwardUrl("/index").failureForwardUrl("/")
-                        .permitAll()
-                        .and().authorizeRequests().antMatchers("/ace/assets/**").permitAll()
-                        .anyRequest().authenticated()
-                        //.and().headers().contentTypeOptions().disable();
-                        .and().csrf().disable();
-                ;
-            }
-        };
+    @Configuration
+    @ConditionalOnMissingBean({ CEIPWebSecurityConfigurerAdapter.class })
+    @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
+    private class CEIPWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
+
+
+
+        @Autowired
+        private UserDetailsService userDetailsService;
+
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http.formLogin()
+                    .loginPage("/").loginProcessingUrl("/login").successForwardUrl("/index").failureForwardUrl("/")
+                    .permitAll()
+                    .and().authorizeRequests().antMatchers("/ace/assets/**").permitAll()
+                    .anyRequest().authenticated().and().rememberMe();
+        }
+
+        @Override
+        protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+            auth.userDetailsService(userDetailsService);
+        }
     }
 }
