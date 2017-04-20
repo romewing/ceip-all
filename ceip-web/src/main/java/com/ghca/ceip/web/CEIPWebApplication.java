@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Bean;
@@ -18,19 +19,17 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 /**
  * Created by Administrator on 2017/3/18.
  */
 @SpringBootApplication
-@EnableOAuth2Sso
 public class CEIPWebApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(CEIPWebApplication.class);
     }
+
 
 
     @Bean
@@ -47,14 +46,18 @@ public class CEIPWebApplication {
 
 
     @Configuration
-    @ConditionalOnMissingBean({ CEIPWebSecurityConfigurerAdapter.class })
+    @ConditionalOnProperty(prefix = "security.basic", name = "enabled", matchIfMissing = true)
     @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
     private class CEIPWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
 
-
+        private SecurityProperties securityProperties;
 
         @Autowired
         private UserDetailsService userDetailsService;
+
+        CEIPWebSecurityConfigurerAdapter(SecurityProperties securityProperties) {
+            this.securityProperties = securityProperties;
+        }
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
@@ -63,6 +66,9 @@ public class CEIPWebApplication {
                     .permitAll()
                     .and().authorizeRequests().antMatchers("/ace/assets/**").permitAll()
                     .anyRequest().authenticated().and().rememberMe();
+            if (!securityProperties.isEnableCsrf()) {
+                http.csrf().disable();
+            }
         }
 
         @Override

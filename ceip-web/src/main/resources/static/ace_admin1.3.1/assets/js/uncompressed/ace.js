@@ -682,10 +682,8 @@ ace.enable_ajax_content = function($, options) {
 		})
 		.complete(function() {
 			contentArea.css('opacity', 0.8)
-			$(document).on('ajaxscriptsloaded', function() {
-				contentArea.css('opacity', 1)
-				contentArea.prevAll('.ajax-loading-overlay').remove();
-			});
+			contentArea.css('opacity', 1)
+			contentArea.prevAll('.ajax-loading-overlay').remove();
 		})
 		.error(function() {
 			$(document).trigger('ajaxloaderror', {url: url, hash: hash});

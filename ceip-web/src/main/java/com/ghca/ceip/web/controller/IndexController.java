@@ -39,5 +39,18 @@ public class IndexController {
         return "blank";
     }
 
+    @RequestMapping("/ajax")
+    public String ajax(Principal principal) {
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+        System.out.println(authentication);
+        return "ajax";
+    }
+
+    @RequestMapping("/page/jqgrid")
+    public String jqQrid(){
+        return "jqgrid";
+    }
+
 }
 
