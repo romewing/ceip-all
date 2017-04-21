@@ -5,6 +5,15 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.ghca.ceip.spider.service.CoreService;
+import org.elasticsearch.action.delete.DeleteResponse;
+import org.elasticsearch.action.get.GetRequestBuilder;
+import org.elasticsearch.action.get.GetResponse;
+import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.rest.RestStatus;
+import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
@@ -24,16 +33,33 @@ import us.codecraft.webmagic.scheduler.QueueScheduler;
 import us.codecraft.webmagic.scheduler.RedisScheduler;
 import us.codecraft.webmagic.scheduler.Scheduler;
 
-@SpringBootApplication
-@EnableEurekaClient
-@EnableFeignClients //1
-@EnableCircuitBreaker //2
-@EnableZuulProxy
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+//@SpringBootApplication
 public class CEIPSpiderApplication {
 
     public static void main(String[] args) {
-        ConfigurableApplicationContext run =
-                SpringApplication.run(CEIPSpiderApplication.class);
+        Settings settings = Settings.builder()
+                .put("cluster.name", "elastic").build();
+        TransportClient client = null;
+        try {
+            client = new PreBuiltTransportClient(settings).addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("192.168.3.51"), 9300))
+                    .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("192.168.3.52"), 9300))
+                    .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("192.168.3.53"), 9300));
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        Map<String, Object> json = new HashMap<String, Object>();
+        json.put("user","kimchy");
+        json.put("postDate",new Date());
+        json.put("message","trying out Elasticsearch");
+        //GetResponse response = client.prepareGet("twitter", "tweet", "AVuO8BQAyde1vTbxqKTv").get();
+        DeleteResponse response = client.prepareDelete("twitter", "tweet", "AVuO8BQAyde1vTbxqKTv").get();
+        System.out.println(response);
     }
 
 
