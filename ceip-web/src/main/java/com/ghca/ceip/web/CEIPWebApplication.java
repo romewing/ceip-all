@@ -46,17 +46,20 @@ public class CEIPWebApplication {
 
 
     @Configuration
+    @ConditionalOnMissingBean({ CEIPWebSecurityConfigurerAdapter.class })
     @ConditionalOnProperty(prefix = "security.basic", name = "enabled", matchIfMissing = true)
     @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
     private class CEIPWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
 
-        private SecurityProperties securityProperties;
+
 
         @Autowired
         private UserDetailsService userDetailsService;
 
-        CEIPWebSecurityConfigurerAdapter(SecurityProperties securityProperties) {
-            this.securityProperties = securityProperties;
+        private final SecurityProperties security;
+
+        public CEIPWebSecurityConfigurerAdapter(SecurityProperties security) {
+            this.security = security;
         }
 
         @Override

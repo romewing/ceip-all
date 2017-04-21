@@ -38,7 +38,10 @@ security:
   ignored: /ace/assets/**
   enable-csrf: false
   basic:
-    enabled: true
+    enabled: false
 logging:
   level:
     org.springframework: debug
+management:
+  security:
+    enabled: false
