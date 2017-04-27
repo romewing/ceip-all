@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link href="jquery-easyui-1.5.2/themes/insdep/easyui.css" rel="stylesheet" type="text/css">
+    <link href="jquery-easyui-1.5.2/themes/metro/easyui.css" rel="stylesheet" type="text/css">
     <link href="jquery-easyui-1.5.2/themes/icon.css" rel="stylesheet" type="text/css">
 
     <script type="text/javascript" src="jquery-easyui-1.5.2/jquery.min.js"></script>
@@ -12,29 +12,16 @@
 </head>
 <body class="easyui-layout">
 <div data-options="region:'north',border:false,bodyCls:'theme-header-layout'">
-    <div class="theme-navigate">
-        <div class="left">
-            <a href="https://www.insdep.com/" class="easyui-linkbutton" target="_blank">首页</a>
-            <a href="https://www.insdep.com/list-1-1.html" class="easyui-linkbutton" target="_blank">入门</a>
-            <a href="https://www.insdep.com/list-2-1.html" class="easyui-linkbutton" target="_blank">主题</a>
-            <a href="https://www.insdep.com/list-3-1.html" class="easyui-linkbutton" target="_blank">组件</a>
-            <a href="https://www.insdep.com/list-4-1.html" class="easyui-linkbutton" target="_blank">扩展</a>
-            <a href="https://www.insdep.com/list-5-1.html" class="easyui-linkbutton" target="_blank">手册</a>
-            <a href="https://www.insdep.com/list-107-1.html" class="easyui-linkbutton" target="_blank">日志</a>
-            <a href="https://www.insdep.com/list-106-1.html" class="easyui-linkbutton" target="_blank">捐赠</a>
-            <a href="https://bbs.insdep.com/?/explore/category-4" class="easyui-linkbutton" target="_blank">下载</a>
-            <a href="https://bbs.insdep.com/" class="easyui-linkbutton" target="_blank">问答</a>
-            <a href="https://www.insdep.com/list-8-1.html" class="easyui-linkbutton" target="_blank">关于</a>
-        </div>
-        <div class="right">
-            <a href="#" class="easyui-menubutton theme-navigate-more-button" data-options="menu:'#more',hasDownArrow:false"></a>
-            <div id="more" class="theme-navigate-more-panel">
-                <div>联系我们</div>
-                <div>参与改进计划</div>
-                <div>关于</div>
-            </div>
+    <div class="right">
+        <a href="#" class="easyui-menubutton theme-navigate-more-button"
+           data-options="menu:'#more',hasDownArrow:false"></a>
+        <div id="more" class="theme-navigate-more-panel">
+            <div>联系我们</div>
+            <div>参与改进计划</div>
+            <div>关于</div>
         </div>
     </div>
+</div>
 </div>
 <div data-options="region:'west',split:true,border:false" title="演示" style="width:300px; padding:10px 20px;">
     <ul class="easyui-tree">
