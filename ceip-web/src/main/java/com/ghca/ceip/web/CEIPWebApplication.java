@@ -56,10 +56,10 @@ public class CEIPWebApplication {
         @Autowired
         private UserDetailsService userDetailsService;
 
-        private final SecurityProperties security;
+        private final SecurityProperties securityProperties;
 
         public CEIPWebSecurityConfigurerAdapter(SecurityProperties security) {
-            this.security = security;
+            this.securityProperties = security;
         }
 
         @Override

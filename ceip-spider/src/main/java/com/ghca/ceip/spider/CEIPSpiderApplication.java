@@ -45,21 +45,22 @@ public class CEIPSpiderApplication {
     public static void main(String[] args) {
         Settings settings = Settings.builder()
                 .put("cluster.name", "elastic").build();
-        TransportClient client = null;
-        try {
-            client = new PreBuiltTransportClient(settings).addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("192.168.3.51"), 9300))
-                    .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("192.168.3.52"), 9300))
-                    .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("192.168.3.53"), 9300));
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-        Map<String, Object> json = new HashMap<String, Object>();
-        json.put("user","kimchy");
-        json.put("postDate",new Date());
-        json.put("message","trying out Elasticsearch");
-        //GetResponse response = client.prepareGet("twitter", "tweet", "AVuO8BQAyde1vTbxqKTv").get();
-        DeleteResponse response = client.prepareDelete("twitter", "tweet", "AVuO8BQAyde1vTbxqKTv").get();
-        System.out.println(response);
+//        TransportClient client = null;
+//        try {
+//            client = new PreBuiltTransportClient(settings).addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("192.168.3.51"), 9300))
+//                    .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("192.168.3.52"), 9300))
+//                    .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("192.168.3.53"), 9300));
+//        } catch (UnknownHostException e) {
+//            e.printStackTrace();
+//        }
+//        Map<String, Object> json = new HashMap<String, Object>();
+//        json.put("user","kimchy");
+//        json.put("postDate",new Date());
+//        json.put("message","trying out Elasticsearch");
+//        //GetResponse response = client.prepareGet("twitter", "tweet", "AVuO8BQAyde1vTbxqKTv").get();
+//        DeleteResponse response = client.prepareDelete("twitter", "tweet", "AVuO8BQAyde1vTbxqKTv").get();
+//        System.out.println(response);
+        System.out.println(Long.MAX_VALUE);
     }
 
 

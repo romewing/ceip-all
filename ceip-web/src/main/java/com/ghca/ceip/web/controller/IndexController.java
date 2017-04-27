@@ -36,7 +36,7 @@ public class IndexController {
         Authentication authentication =
                 SecurityContextHolder.getContext().getAuthentication();
         System.out.println(authentication);
-        return "blank";
+        return "index";
     }
 
     @RequestMapping("/ajax")

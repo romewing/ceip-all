@@ -40,7 +40,7 @@ public class CandidateNotice {
 
     private String source;  //采集网站
 
-    //private String owner;  //项目业主
+    private String owner;  //项目业主
 
 
     /*@OneToMany
