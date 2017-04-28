@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link href="jquery-easyui-1.5.2/themes/metro/easyui.css" rel="stylesheet" type="text/css">
+    <link href="jquery-easyui-1.5.2/themes/metro-blue/easyui.css" rel="stylesheet" type="text/css">
     <link href="jquery-easyui-1.5.2/themes/icon.css" rel="stylesheet" type="text/css">
 
     <script type="text/javascript" src="jquery-easyui-1.5.2/jquery.min.js"></script>
@@ -11,21 +11,13 @@
     <script type="text/javascript" src="jquery-easyui-1.5.2/jquery.easyui-extend.js"></script>
 </head>
 <body class="easyui-layout">
-<div data-options="region:'north',border:false,bodyCls:'theme-header-layout'">
-    <div class="right">
-        <a href="#" class="easyui-menubutton theme-navigate-more-button"
-           data-options="menu:'#more',hasDownArrow:false"></a>
-        <div id="more" class="theme-navigate-more-panel">
-            <div>联系我们</div>
-            <div>参与改进计划</div>
-            <div>关于</div>
-        </div>
+<div data-options="region:'north',border:false" style="height: 75px">
+</div>
+</div>
+<div data-options="region:'west',split:true" title="演示" style="width:200px">
+    <div class="easyui-according">
+
     </div>
-</div>
-</div>
-<div data-options="region:'west',split:true,border:false" title="演示" style="width:300px; padding:10px 20px;">
-    <ul class="easyui-tree">
-    </ul>
 </div>
 <div data-options="region:'center',border:false" title="预览">
 
