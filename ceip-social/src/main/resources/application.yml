@@ -7,9 +7,4 @@ security:
       authorized-grant-types: client_credentials
       id: baidu
       client-authentication-scheme: query
-    resource:
-      token-info-uri: https://aip.baidubce.com/oauth/2.0/token
-
-spring:
-  main:
-    web-environment: false
+      authentication-scheme: query

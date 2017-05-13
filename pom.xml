@@ -12,6 +12,7 @@
         <module>ceip-security</module>
         <module>ceip-storm</module>
         <module>ceip-data</module>
+        <module>ceip-social</module>
     </modules>
 
     <parent>
