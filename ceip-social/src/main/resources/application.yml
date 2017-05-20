@@ -1,10 +1,9 @@
+
+debug: true
 security:
   oauth2:
     client:
-      clientId: NjGK30ZxQ8hgBisGEbDjrRxY
-      clientSecret: SDNG6amwwOmYCQLr88P7BiY8IEwRttRD
-      accessTokenUri: https://aip.baidubce.com/oauth/2.0/token
-      authorized-grant-types: client_credentials
-      id: baidu
-      client-authentication-scheme: query
-      authentication-scheme: query
+      authorized-grant-types: password
+    resource:
+      user-info-uri: https://aip.baidubce.com/oauth/2.0/token
+

@@ -3,6 +3,7 @@ package com.ghca.ceip.security;
 import com.ghca.ceip.security.repository.UserRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -14,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.core.userdetails.cache.SpringCacheBasedUserCache;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -32,9 +34,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableSwagger2
-@EnableCaching
-@EnableJpaAuditing
-@EnableAuthorizationServer
+@EnableOAuth2Client
 @EnableWebMvc
 public class CEIPSecurityApplication {
 
@@ -60,10 +60,6 @@ public class CEIPSecurityApplication {
                 .build();
     }
 
-    @Bean
-    public UserCache userCache(CacheManager cacheManager) throws Exception {
-        return new SpringCacheBasedUserCache(cacheManager.getCache("usercache"));
-    }
 
     @Bean
     public UserDetailsService userDetailsService(UserRepository userRepository) {

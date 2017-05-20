@@ -39,12 +39,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-//@SpringBootApplication
+@SpringBootApplication
 public class CEIPSpiderApplication {
 
     public static void main(String[] args) {
-        Settings settings = Settings.builder()
-                .put("cluster.name", "elastic").build();
+//        Settings settings = Settings.builder()
+//                .put("cluster.name", "elastic").build();
 //        TransportClient client = null;
 //        try {
 //            client = new PreBuiltTransportClient(settings).addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("192.168.3.51"), 9300))

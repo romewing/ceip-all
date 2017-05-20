@@ -6,7 +6,6 @@ import com.ghca.ceip.security.entity.User;
 import com.ghca.ceip.security.repository.PermissionReository;
 import com.ghca.ceip.security.repository.RoleRepository;
 import com.ghca.ceip.security.repository.UserRepository;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +41,7 @@ public class SecurityController {
 
     @GetMapping(value = {"/user", "/user/{id}"})
     public List<User> listUser(@PathVariable(required = false) String id) {
-        if(StringUtils.isNotBlank(id)) {
+       /* if(StringUtils.isNotBlank(id)) {
             User user = userRepository.findByUsername(id);
             List<User> list = new ArrayList<>();
             list.add(user);
@@ -50,7 +49,8 @@ public class SecurityController {
         }
         else {
             return userRepository.findAll();
-        }
+        }*/
+       return null;
     }
 
     @PostMapping("/role")

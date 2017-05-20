@@ -20,10 +20,39 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-activemq</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+        </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>4.2.0</version>
+                <configuration>
+                    <url>jdbc:mysql://192.168.3.111:3306/test</url>
+                    <user>root</user>
+                    <password>root</password>
+                    <schemas>
+                        <schema>test</schema>
+                    </schemas>
+                    <placeholders>
+                        <keyABC>valueXYZ</keyABC>
+                        <otherplaceholder>value123</otherplaceholder>
+                    </placeholders>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
