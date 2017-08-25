@@ -1,106 +1,65 @@
 package com.ghca.ceip.spider;
 
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.ghca.ceip.spider.service.CoreService;
-import org.elasticsearch.action.delete.DeleteResponse;
-import org.elasticsearch.action.get.GetRequestBuilder;
-import org.elasticsearch.action.get.GetResponse;
-import org.elasticsearch.action.index.IndexResponse;
-import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
-import org.elasticsearch.rest.RestStatus;
-import org.elasticsearch.transport.client.PreBuiltTransportClient;
-import org.springframework.boot.SpringApplication;
+import org.springframework.batch.core.Job;
+import org.springframework.batch.core.Step;
+import org.springframework.batch.core.StepContribution;
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
+import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.scope.context.ChunkContext;
+import org.springframework.batch.core.step.tasklet.Tasklet;
+import org.springframework.batch.repeat.RepeatStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-import org.springframework.cloud.netflix.feign.EnableFeignClients;
-import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.web.client.RestTemplate;
-import us.codecraft.webmagic.Request;
-import us.codecraft.webmagic.Spider;
-import us.codecraft.webmagic.scheduler.QueueScheduler;
-import us.codecraft.webmagic.scheduler.RedisScheduler;
-import us.codecraft.webmagic.scheduler.Scheduler;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import javax.sql.DataSource;
+
+import static org.springframework.boot.SpringApplication.run;
 
 @SpringBootApplication
+@EnableBatchProcessing
 public class CEIPSpiderApplication {
 
     public static void main(String[] args) {
-//        Settings settings = Settings.builder()
-//                .put("cluster.name", "elastic").build();
-//        TransportClient client = null;
-//        try {
-//            client = new PreBuiltTransportClient(settings).addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("192.168.3.51"), 9300))
-//                    .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("192.168.3.52"), 9300))
-//                    .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("192.168.3.53"), 9300));
-//        } catch (UnknownHostException e) {
-//            e.printStackTrace();
-//        }
-//        Map<String, Object> json = new HashMap<String, Object>();
-//        json.put("user","kimchy");
-//        json.put("postDate",new Date());
-//        json.put("message","trying out Elasticsearch");
-//        //GetResponse response = client.prepareGet("twitter", "tweet", "AVuO8BQAyde1vTbxqKTv").get();
-//        DeleteResponse response = client.prepareDelete("twitter", "tweet", "AVuO8BQAyde1vTbxqKTv").get();
-//        System.out.println(response);
-        System.out.println(Long.MAX_VALUE);
+        ConfigurableApplicationContext run = run(CEIPSpiderApplication.class);
+        DataSource bean = run.getBean(DataSource.class);
+        System.out.println(bean);
     }
 
 
-   /* @Bean
-    public JedisConnectionFactory jedisConnectionFactory() {
-        JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
-        jedisConnectionFactory.setUsePool(true);
-        return jedisConnectionFactory;
-    }*/
 
+    @Autowired
+    private JobBuilderFactory jobs;
 
-    /*@Bean
-    public RedisTemplate redisTemplate() {
-        RedisTemplate redisTemplate = new RedisTemplate();
-        redisTemplate.setConnectionFactory(jedisConnectionFactory());
-        return redisTemplate;
-    }
+    @Autowired
+    private StepBuilderFactory steps;
 
     @Bean
-    public StringRedisTemplate stringRedisTemplate() {
-        StringRedisTemplate stringRedisTemplate = new StringRedisTemplate();
-        stringRedisTemplate.setConnectionFactory(jedisConnectionFactory());
-        return  stringRedisTemplate;
-    }*/
+    protected Tasklet tasklet() {
 
-    @Bean
-    public Scheduler scheduler() {
-       return new RedisScheduler("127.0.0.1"){
+        return new Tasklet() {
             @Override
-            protected boolean shouldReserved(Request request) {
-                /*if("http://www.sccin.com.cn/InvestmentInfo/ZhaoBiao/houxuanren.aspx".equals(request.getUrl())) {
-                    return true;
-                }
-                return super.shouldReserved(request);*/
-                return true;
+            public RepeatStatus execute(StepContribution contribution,
+                                        ChunkContext context) {
+                return RepeatStatus.FINISHED;
             }
         };
 
-       //return new QueueScheduler();
     }
+
+    @Bean
+    public Job job() throws Exception {
+        return this.jobs.get("job").start(step1()).build();
+    }
+
+    @Bean
+    protected Step step1() throws Exception {
+        return this.steps.get("step1").tasklet(tasklet()).build();
+    }
+
 
 }
 

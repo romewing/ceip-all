@@ -12,20 +12,5 @@ import org.springframework.stereotype.Service;
 @Service
 public class CoreHystrixService {
 
-    @Autowired
-    private CoreService coreService;
-    @HystrixCommand(fallbackMethod = "fallbackSave")
-    public void saveCandidateNotice(JSONArray candidateNotices) {
-        coreService.saveCandidateNotice(candidateNotices);
-    }
-
-    @HystrixCommand(fallbackMethod = "fallbackSave")
-    public void saveCandidateNotice(String candidateNotices) {
-        coreService.test(candidateNotices);
-    }
-
-    public void fallbackSave(JSONArray candidateNotices) {
-        System.out.println("fallbackSave");
-    }
 
 }

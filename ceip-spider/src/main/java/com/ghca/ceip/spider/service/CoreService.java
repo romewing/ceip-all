@@ -11,7 +11,6 @@ import java.util.List;
  * Created by gh on 2017/3/16.
  */
 
-@FeignClient("core")
 public interface CoreService {
 
     @RequestMapping(value = "/candidatenotice", method = RequestMethod.PUT)
