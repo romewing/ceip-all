@@ -27,7 +27,7 @@ public class CandidateNoticePipeline implements SubPipeline {
     public MatchOther processResult(ResultItems resultItems, Task task) {
         JSONArray candidateNotices = resultItems.get("candidateNotices");
         if(candidateNotices!=null) {
-            coreService.saveCandidateNotice(candidateNotices);
+            //coreService.saveCandidateNotice(candidateNotices);
         }
         return MatchOther.NO;
     }
